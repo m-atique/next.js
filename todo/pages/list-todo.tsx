@@ -1,62 +1,57 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { todos } from "./store/data"
+import { getAll } from "./functions/getall"
+import IconCheck from "./components/tickicon"
+import IconEdit from "./components/editIcon"
+import IconDelete from "./components/deleteIcon"
+import IconBxUndo from "./components/undoIcon"
 
 
 export default function TodoList() {
     //----------------------------------------------setting states to get user dtata
     const [userTAsk, setUserTask] = useState('')
 
-    const todos = [
-        { id: 1, task: 'todo1', status: true },
-        { id: 2, task: 'todo2', status: true },
-        { id: 3, task: 'todo3', status: false },
-        { id: 4, task: 'todo4', status: true },
-        { id: 5, task: 'todo5', status: false },
-        { id: 1, task: 'todo1', status: false },
-        { id: 2, task: 'todo2', status: true },
-        { id: 3, task: 'todo3', status: false },
-        { id: 1, task: 'todo1', status: true },
-        { id: 2, task: 'todo2', status: true },
-        { id: 3, task: 'todo3', status: false },
-        { id: 4, task: 'todo4', status: true },
-        { id: 5, task: 'todo5', status: false },
-        { id: 1, task: 'todo1', status: false },
-        { id: 2, task: 'todo2', status: true },
-        { id: 3, task: 'todo3', status: false },
-       
-        
-    ]
+    useEffect(()=>{
+        setUserTask(getAll)
+    })    
 
 
 
     //-------------------------------------------rendreing html
     return (
         <>
-         <div className="shadow-lg shadow-gray-500 rounded-md border-[1px] border-gray-200 mb:w-full sm:w-3/5 p-2 mb-6 overflow-y-scroll h-2/6">
+         <div className="shadow-lg shadow-gray-500 rounded-md border-[1px] border-gray-200 mb:w-full sm:w-3/5 p-2 mb-6 overflow-y-scroll h-2/5">
           
             {todos.map((item, index) => {
                 if(item.status ===true){
 
                     return (
                         <div className="flex flex-row my-2  ">
-                        <button className="hover:font-extrabold rounded-l-full w-7 h-7  bg-teal-500 ">O</button>
+                        <button className="hover:font-extrabold rounded-l-full w-7 h-7  bg-teal-500 pl-1 hover:text-xl hover:text-white"><IconCheck /></button>
                         <input  disabled type="text" value={item.task}  className="pl-2  border-2 bg-gray-200 w-full" />
-                        <button className="hover:font-extrabold w-7 h-7  bg-yellow-300">E</button>
-                        <button className="hover:font-extrabold rounded-r-full w-7 h-7 text-white bg-red-600">D</button>
+                        <button className="hover:font-extrabold w-7 h-7  pl-1 bg-yellow-300">
+                            <IconEdit />
+                        </button>
+                        <button className="hover:font-extrabold rounded-r-full w-7 h-7 text-white bg-red-600 pl-[2px]">
+                        <IconDelete />
+                        </button>
                     </div>
                 )
             }
             })}
             </div>
-                <div className=" bg-gray-800 shadow-lg  shadow-slate-700 rounded-md border-[1px] border-black mb:w-full sm:w-3/5 p-2  h-2/6 overflow-y-scroll">
+                <div className=" bg-gray-800 shadow-lg  shadow-slate-700 rounded-md border-[1px] border-black mb:w-full sm:w-3/5 p-2  h-1/4 overflow-y-scroll">
             {todos.map((item, index) => {
                 if(item.status ===false){
                 return(
                     <div className="flex flex-row my-2 ">
-                    <button className="hover:font-extrabold rounded-l-full w-7 h-7  bg-blue-500 ">O</button>
-                    <input  disabled type="text" value={item.task}  className="pl-2  border-2 border-gray-900 bg-gray-900 text-white line-through w-full" />
-                    <button className=" hover:font-extrabold relative rounded-r-full w-7 h-7 text-white bg-red-500">
-                       D
+                    <button className="hover:font-extrabold rounded-l-full w-7 h-7 pl-1  bg-blue-500 ">
+                        <IconBxUndo />
+                    </button>
+                    <input  disabled type="text" value={item.task}  className="pl-1  border-2 border-gray-900 bg-gray-900 text-white line-through w-full" />
+                    <button className=" hover:font-extrabold relative rounded-r-full w-7 h-7 text-white bg-red-500 pl-1">
+                       <IconDelete />
                     </button>
                 </div>
                 )

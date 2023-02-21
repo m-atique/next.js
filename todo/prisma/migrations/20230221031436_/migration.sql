@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Todos" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "task" TEXT NOT NULL,
+    "status" BOOLEAN NOT NULL,
+    "user" TEXT NOT NULL
+);
