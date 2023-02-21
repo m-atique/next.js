@@ -8,52 +8,61 @@ export default function UserPage() {
 
     const [userName, setUser] = useState('')
     const [userId, setId] = useState(0)
+    let allUsers:string[]=[]
     const router = useRouter()
     //----------------------------------getting all
     const getallUsers= async()=>{
         const response = await fetch('api/add-user', {
             method: 'GET'
           })
-          const users = await response.json()
+          const users:[] = await response.json()
           
           setId(users.length)
-          console.log(userId)
+        users.map((item)=>{allUsers.push(item['name'])})
+        
+
         }
     
     //------------------------adding new user
     const storeUser= async()=>{
         if(userName!==''){
-            //-----------------------------adding to local storage as current user
-            localStorage.setItem('user',userName) 
-            //-----------------------------------ading user to prisma
-            const data = await fetch('api/add-user',{
-                method:'POST',
-                body:JSON.stringify({
-                    user:{
-                        id:userId+1,
-                        name:userName
+//--------------------------------------
+     if(allUsers.includes(userName)){
+        alert('User already exists')
+     }
+     else{
+
+         //-----------------------------adding to local storage as current user
+         localStorage.setItem('user',userName) 
+         //---------------------------------------------------ading user to prisma
+         const data = await fetch('api/add-user',{
+             method:'POST',
+             body:JSON.stringify({
+                 user:{
+                     id:userId+1,
+                     name:userName
                     }
                 }),
                 headers:{
                     'Content-Type': 'application/json'
                 }
             })
-//------------------------------------------reloading home page
+            //------------------------------------------reloading home page
             router.reload()
             setUser('')      
+        }
             
         }
         else{
             alert('Please Enter a user name')
         }
-        console.log(localStorage.getItem('user'))
     }
     //--------------------------------------------calling useEffect
     useEffect(()=>{
-        console.log('before',userId)
-        getallUsers()
-        console.log('before',userId)
-    },[])
+        getallUsers() 
+          
+    },[allUsers])
+    //-------------------------------------rendering component
     return (
         <div className="flex center bg-slate-50 items-center justify-center h-screen">
             <div className=" flex flex-col rounded-xl p-8 w-auto h-4/6 justify-center items-center  bg-white shadow-lg shadow-slate-400">

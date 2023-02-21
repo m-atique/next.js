@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id Int @id
-  name String
+  name String 
 }
 
 model Todos {
