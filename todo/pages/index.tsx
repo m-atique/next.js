@@ -7,10 +7,11 @@ import TodoList from "./list-todo"
 
 
 export default function Home() {
-  const [userName, setUser] = useState('')
-  const router = useRouter()
 
+  const [userName, setUser] = useState('')
+  
   useEffect(()=>{
+   
     const user =localStorage.getItem('user')
     if(user){
       setUser(user)
@@ -28,9 +29,9 @@ export default function Home() {
       <div className="absolute -right-24 -bottom-20 h-40 w-40 rounded-full bg-violet-500"></div>
       <div className="absolute -right-20 bottom-14 h-24 rotate-45 w-28   rounded-full bg-yellow-400"></div>
       
-      <AddTodo />
+      <AddTodo  />
       <br />
-      <TodoList />
+      <TodoList/>
       </div>
       </div>
      )
